@@ -4,8 +4,8 @@
  "name": "Metawidget",
  "description": "Metawidget",
  "type": "widget",
- "version": "1.0",
  "author": "Andrey Gavrilov",
- "md5sum": "F533630B9013CC723FFCD13048BFF649"
+ "version": "1.0",
+ "md5sum": "f533630b9013cc723ffcd13048bff649"
 }
 ]
