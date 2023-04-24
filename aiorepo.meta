@@ -1,5 +1,5 @@
 {
-    name = "AIO Repository",
-    description = "Scripts and themes",
+    name = "AIO Scripts Repository",
+    description = "Scripts for AIO Launcher",
     owner = "Andrey Gavrilov",
 }
