@@ -1,11 +1,69 @@
 [
 {
- "file": "my-metawidget.lua",
- "name": "Metawidget",
- "description": "Metawidget",
- "type": "widget",
- "author": "Andrey Gavrilov",
- "version": "1.0",
- "md5sum": "f533630b9013cc723ffcd13048bff649"
+"file": "apps-widget.lua",
+"name": "My apps",
+"description": "Simple apps widget",
+"type": "widget",
+"version": "1.0",
+"author": "Andrey Gavrilov",
+"md5sum": "6F08726D1AFC280E0EDB7222DBBA9CF5"
+},
+{
+"file": "bdpn-search.lua",
+"name": "Мобильный оператор",
+"description": "Cкрипт отображает мобильного оператора по номеру телефона",
+"type": "search",
+"lang": "ru",
+"author": "Andrey Gavrilov",
+"version": "1.0",
+"md5sum": "7F6DC77D9E62B119161081F4D51FDF4F"
+},
+{
+"file": "calllog-ru-root-widget.lua",
+"name": "История вызовов",
+"description": "Скрипт показывает историю вызов через прямое чтение базы звонков",
+"type": "widget",
+"author": "Andrey Gavrilov",
+"version": "1.0",
+"lang": "ru",
+"root": "true",
+"md5sum": "2CF3310C3B74224081C64A1AE3AA3D46"
+},
+{
+"file": "cloud-file-widget.lua",
+"name": "File Explorer",
+"description": "Dropbox file explorer. Shows only AIO Launcher subdirectory",
+"type": "widget",
+"version": "1.0",
+"author": "Andrey Gavrilov",
+"md5sum": "D3B74989DCFB32D46632BA901E4E3AC8"
+},
+{
+"file": "currencies-widget.lua",
+"name": "Currencies",
+"description": "Currency rates widget. Click on the date to change it.",
+"type": "widget",
+"author": "Andrey Gavrilov",
+"version": "1.0",
+"md5sum": "970433522B54A5DC2145B02DB300F34D"
+},
+{
+"file": "currency-cbr-search.lua",
+"name": "Курс валют ЦБ",
+"description": "Cкрипт отображает курс валюты ЦБ России на заданную дату (usd 30 3 22)",
+"type": "search",
+"lang": "ru",
+"author": "Andrey Gavrilov",
+"version": "1.0",
+"md5sum": "03966044C9150D5F24E2BC6774A35876"
+},
+{
+"file": "metawidget.lua",
+"name": "Metawidget",
+"description": "Metawidget",
+"type": "widget",
+"author": "Andrey Gavrilov",
+"version": "1.0",
+"md5sum": "F533630B9013CC723FFCD13048BFF649"
 }
 ]
