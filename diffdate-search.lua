@@ -2,7 +2,7 @@
 -- description = "Number of days passed since (remain until) the specified date in the format dd.mm.yyyy"
 -- type = "search"
 -- author = "Andrey Gavrilov"
--- version = "1.0"
+-- version = "1.0" 
 
 function on_search(input)
 	local date = input:match("(%d?%d%.%d?%d%.%d%d%d%d)")
