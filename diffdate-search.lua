@@ -1,7 +1,6 @@
--- name = "Разность дат"
--- description = "Количество дней прошедших от (оставшихся до) заданной даты"
+-- name = "Date difference"
+-- description = "Number of days passed since (remain until) the specified date in the format dd.mm.yyyy"
 -- type = "search"
--- lang = "ru"
 -- author = "Andrey Gavrilov"
 -- version = "1.0"
 
@@ -19,13 +18,13 @@ function on_search(input)
 	local lin = ""
 	local col = aio:colors().progress
 	if dt > 0 then
-	    lin = "Осталось дней: " .. tostring(dt)
+	    lin = "Remaining days: " .. tostring(dt)
 	    col = aio:colors().progress_good
 	elseif dt < 0 then
-	    lin = "Прошло дней: " .. tostring(-dt)
+	    lin = "Past days: " .. tostring(-dt)
 	    col = aio:colors().progress_bad
 	else
-	    lin = "Это сегодня"
+	    lin = "Today"
 	end
 	search:show_lines({lin},{col})
 end
