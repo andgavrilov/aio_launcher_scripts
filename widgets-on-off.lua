@@ -10,9 +10,10 @@ prefs.widgets = (not prefs.widgets) and {} or prefs.widgets
 
 local pos = 0
 local color = ui:get_colors()
+local buttons,colors = {},{}
 
 function on_alarm()
-    --ui:show_buttons(get_buttons())
+    ui:show_buttons(get_buttons())
 	tasker:send_command("flash")
 end
 
@@ -60,7 +61,7 @@ function on_settings()
 end
 
 function get_buttons()
-	local buttons,colors = {},{}
+	buttons,colors = {},{}
 	local widgets = get_widgets()
 	for i,v in ipairs(prefs.widgets) do
 		table.insert(buttons, "fa:" .. widgets.icon[v])
@@ -117,7 +118,6 @@ function get_pos()
 end
 
 function on_command(str)
-	local buttons,colors = get_buttons()
     if (str:sub(1,5) == "flash") and (str:sub(6) == "1") then
         colors[#colors] = color.enabled_icon
     else
