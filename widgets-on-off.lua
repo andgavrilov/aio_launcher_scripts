@@ -72,15 +72,11 @@ function get_checkbox_idx()
 end
 
 function get_buttons()
-	buttons,colors = {},{}
-	local checkbox_idx = get_checkbox_idx()
-	for i = 1, #checkbox_idx do
-		table.insert(buttons, icons[checkbox_idx[i]])
-		if aio:is_widget_added(widgets[checkbox_idx[i]]) then
-			table.insert(colors, color.enabled_icon)
-		else
-			table.insert(colors, color.disabled_icon)
-		end
+	local buttons,colors = {},{}
+	local widgets = get_widgets()
+	for i,v in ipairs(prefs.widgets) do
+		table.insert(buttons, "fa:" .. widgets.icon[i])
+		table.insert(colors, widgets.enabled[i] and color.enabled_icon or color.disabled_icon)
 	end
 	table.insert(buttons, "fa:flashlight")
 	table.insert(colors, color.disabled_icon)
@@ -142,20 +138,19 @@ function on_command(str)
 end
 
 function get_widgets()
-	local all_widgets = {}
-	all_widgets.icon = {}
-	all_widgets.name = {}
-	all_widgets.label = {}
-	all_widgets.enabled = {}
-	local available_widgets = aio:available_widgets()
-	for i,v in ipairs(available_widgets) do
+	local widgets = {}
+	widgets.icon = {}
+	widgets.name = {}
+	widgets.label = {}
+	widgets.enabled = {}
+	for i,v in ipairs(aio:available_widgets()) do
 		if v.type == "builtin" then
-			table.insert(all_widgets.icon, v.icon)
-			table.insert(all_widgets.name, v.name)
-			table.insert(all_widgets.label, v.label)
-			table.insert(all_widgets.enabled, v.enabled)
+			table.insert(widgets.icon, v.icon)
+			table.insert(widgets.name, v.name)
+			table.insert(widgets.label, v.label)
+			table.insert(widgets.enabled, v.enabled)
 		end
 	end
-	return all_widgets
+	return widgets
 end
 
