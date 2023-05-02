@@ -14,7 +14,7 @@ local buttons,colors = {},{}
 
 function on_alarm()
     ui:show_buttons(get_buttons())
-	tasker:send_command("flash")
+	tasker:send_command("flash=:=" .. aio:self_name())
 end
 
 function on_long_click(idx)
@@ -31,7 +31,7 @@ function on_click(idx)
 	system:vibrate(10)
 	if idx > #prefs.widgets then
 	    aio:do_action("flashlight")
-		tasker:send_command("flash")
+		tasker:send_command("flash=:=" .. aio:self_name())
 	    return
 	end
 	local widgets = get_widgets()
