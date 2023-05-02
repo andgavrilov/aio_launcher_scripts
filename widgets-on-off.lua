@@ -5,8 +5,9 @@
 -- author = "Andrey Gavrilov"
 -- version = "2.0"
 
---[[prefs = require "prefs"
-prefs._name = "widget-switcher"]]
+prefs = require "prefs"
+prefs._name = "widget-switcher"
+prefs.widgets = prefs.widgets and prefs.widgets or {1}
 
 local widgets = {"weather","weatheronly","clock","alarm","worldclock","monitor","traffic","player","apps","appbox","applist","contacts","notify","dialogs","dialer","timer","stopwatch","mail","notes","tasks","feed","telegram","twitter","calendar","calendarw","exchange","finance","bitcoin","control","recorder","calculator","empty","bluetooth","map","remote","health","my-calendar.lua"}
 local icons = {"fa:user-clock","fa:sun-cloud","fa:clock","fa:alarm-clock","fa:business-time","fa:network-wired","fa:exchange","fa:play-circle","fa:robot","fa:th","fa:list","fa:address-card","fa:bell","fa:comment-alt-minus","fa:phone-alt","fa:chess-clock","fa:stopwatch","fa:at","fa:sticky-note","fa:calendar-check","fa:rss-square","fa:paper-plane","fa:dove","fa:calendar-lines","fa:calendar-week","fa:euro-sign","fa:chart-line","fa:coins","fa:wifi","fa:microphone-alt","fa:calculator-alt","fa:eraser","fa:head-side-headphones","fa:map-marked-alt","fa:user-tag","fa:heart","fa:calendar-days"}
@@ -59,7 +60,7 @@ end
 function on_settings()
 	--ui:show_checkbox_dialog("Выберите виджеты", names, get_checkbox_idx())
 	local widgets = get_widgets()
-	ui:show_checkbox_dialog("Select widgets", widgets.label, widgets.enabled)
+	ui:show_checkbox_dialog("Select widgets", widgets.label, prefs.widgets)
 end
 
 function get_checkbox_idx()
@@ -157,3 +158,4 @@ function get_widgets()
 	end
 	return all_widgets
 end
+
