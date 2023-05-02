@@ -1,4 +1,4 @@
--- name = "Wadget Switcher"
+-- name = "Widget Switcher"
 -- description = "Turns screen widgets on and off when buttons are pressed"
 -- type = "widget"
 -- arguments_default = "15 16 26 28 29"
