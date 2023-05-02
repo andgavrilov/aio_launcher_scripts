@@ -1,9 +1,12 @@
--- name = "Переключатель виджетов"
+-- name = "Wadget Switcher"
 -- description = "Turns screen widgets on and off when buttons are pressed"
 -- type = "widget"
 -- arguments_default = "15 16 26 28 29"
 -- author = "Andrey Gavrilov"
 -- version = "2.0"
+
+--[[prefs = require "prefs"
+prefs._name = "widget-switcher"]]
 
 local widgets = {"weather","weatheronly","clock","alarm","worldclock","monitor","traffic","player","apps","appbox","applist","contacts","notify","dialogs","dialer","timer","stopwatch","mail","notes","tasks","feed","telegram","twitter","calendar","calendarw","exchange","finance","bitcoin","control","recorder","calculator","empty","bluetooth","map","remote","health","my-calendar.lua"}
 local icons = {"fa:user-clock","fa:sun-cloud","fa:clock","fa:alarm-clock","fa:business-time","fa:network-wired","fa:exchange","fa:play-circle","fa:robot","fa:th","fa:list","fa:address-card","fa:bell","fa:comment-alt-minus","fa:phone-alt","fa:chess-clock","fa:stopwatch","fa:at","fa:sticky-note","fa:calendar-check","fa:rss-square","fa:paper-plane","fa:dove","fa:calendar-lines","fa:calendar-week","fa:euro-sign","fa:chart-line","fa:coins","fa:wifi","fa:microphone-alt","fa:calculator-alt","fa:eraser","fa:head-side-headphones","fa:map-marked-alt","fa:user-tag","fa:heart","fa:calendar-days"}
@@ -14,7 +17,7 @@ local color = ui:get_colors()
 
 function on_alarm()
     ui:show_buttons(get_buttons())
-    tasker:send_command("flash")
+    --tasker:send_command("flash")
 end
 
 function on_long_click(idx)
@@ -54,7 +57,9 @@ function on_dialog_action(data)
 end
 
 function on_settings()
-	ui:show_checkbox_dialog("Выберите виджеты", names, get_checkbox_idx())
+	--ui:show_checkbox_dialog("Выберите виджеты", names, get_checkbox_idx())
+	local widgets = get_widgets()
+	ui:show_checkbox_dialog("Select widgets", widgets.label, widgets.enabled)
 end
 
 function get_checkbox_idx()
@@ -133,4 +138,22 @@ function on_command(str)
         colors[#colors] = color.disabled_icon
     end
     ui:show_buttons(buttons,colors)
+end
+
+function get_widgets()
+	local all_widgets = {}
+	all_widgets.icon = {}
+	all_widgets.name = {}
+	all_widgets.label = {}
+	all_widgets.enabled = {}
+	local available_widgets = aio:available_widgets()
+	for i,v in ipairs(available_widgets) do
+		if v.type == "builtin" then
+			table.insert(all_widgets.icon, v.icon)
+			table.insert(all_widgets.name, v.name)
+			table.insert(all_widgets.label, v.label)
+			table.insert(all_widgets.enabled, v.enabled)
+		end
+	end
+	return all_widgets
 end
