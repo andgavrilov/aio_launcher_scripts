@@ -7,7 +7,7 @@
 
 prefs = require "prefs"
 prefs._name = "widget-switcher"
-prefs.widgets = (not prefs.widgets) and {1} or prefs.widgets
+prefs.widgets = (not prefs.widgets) and {} or prefs.widgets
 
 local widgets = {"weather","weatheronly","clock","alarm","worldclock","monitor","traffic","player","apps","appbox","applist","contacts","notify","dialogs","dialer","timer","stopwatch","mail","notes","tasks","feed","telegram","twitter","calendar","calendarw","exchange","finance","bitcoin","control","recorder","calculator","empty","bluetooth","map","remote","health","my-calendar.lua"}
 local icons = {"fa:user-clock","fa:sun-cloud","fa:clock","fa:alarm-clock","fa:business-time","fa:network-wired","fa:exchange","fa:play-circle","fa:robot","fa:th","fa:list","fa:address-card","fa:bell","fa:comment-alt-minus","fa:phone-alt","fa:chess-clock","fa:stopwatch","fa:at","fa:sticky-note","fa:calendar-check","fa:rss-square","fa:paper-plane","fa:dove","fa:calendar-lines","fa:calendar-week","fa:euro-sign","fa:chart-line","fa:coins","fa:wifi","fa:microphone-alt","fa:calculator-alt","fa:eraser","fa:head-side-headphones","fa:map-marked-alt","fa:user-tag","fa:heart","fa:calendar-days"}
@@ -18,13 +18,17 @@ local color = ui:get_colors()
 
 function on_alarm()
     ui:show_buttons(get_buttons())
-    --tasker:send_command("flash")
 end
 
 function on_long_click(idx)
 	system:vibrate(10)
+	buttons,colors = get_buttons()
     pos = idx
-    ui:show_context_menu({{"angle-left",""},{"ban",""},{"angle-right",""},{icons[get_checkbox_idx()[idx]]:gsub("fa:",""),names[get_checkbox_idx()[idx]]}})
+	if idx == #buttons then
+		return
+	end
+	local widgets = get_widgets()
+	ui:show_context_menu({{"angle-left",""},{"ban",""},{"angle-right",""},{widgets.icon[prefs.widgets[idx]],widgets.name[prefs.widgets[idx]]}})
 end
 
 function on_click(idx)
@@ -32,47 +36,36 @@ function on_click(idx)
 	buttons,colors = get_buttons()
 	if idx == #buttons then
 	    aio:do_action("flashlight")
-	    tasker:send_command("flash")
 	    return
 	end
+	local widgets = get_widgets()
 	for i=1,#buttons-1 do
-	    local widget = widgets[get_checkbox_idx()[i]]
+	    local widget = widgets.name[prefs.widgets[i]]
 	    if i == idx and not aio:is_widget_added(widget) then
 	        aio:add_widget(widget, get_pos())
 	        aio:fold_widget(widget, false)
-	        colors[i] = color.enabled_icon
 	    else
 	        aio:remove_widget(widget)
-	        colors[i] = color.disabled_icon
 	    end
 	end
-    ui:show_buttons(buttons,colors)
+    on_alarm()
 end
 
 function on_dialog_action(data)
 	if data == -1 then
 		return
 	end
-	settings:set(data)
+	prefs.widgets = data
 	on_alarm()
 end
 
 function on_settings()
-	--ui:show_checkbox_dialog("Выберите виджеты", names, get_checkbox_idx())
 	local widgets = get_widgets()
 	ui:show_checkbox_dialog("Select widgets", widgets.label, prefs.widgets)
 end
 
-function get_checkbox_idx()
-	local tab = settings:get()
-	for i = 1, #tab do
-	    tab[i] = tonumber(tab[i])
-	end
-	return tab
-end
-
 function get_buttons()
-	local buttons,colors = {},{}
+	buttons,colors = {},{}
 	local widgets = get_widgets()
 	for i,v in ipairs(prefs.widgets) do
 		table.insert(buttons, "fa:" .. widgets.icon[i])
@@ -84,7 +77,7 @@ function get_buttons()
 end
 
 function move(x)
-    local tab = settings:get()
+    local tab = prefs.widgets
     if (pos*x == -1) or (pos*x == #tab) then
         return
     end
@@ -92,14 +85,14 @@ function move(x)
     local next = tab[pos+x]
     tab[pos+x] = cur
     tab[pos] = next
-    settings:set(tab)
+    prefs.widgets = tab
     on_alarm()
 end
 
 function remove()
-    local tab = settings:get()
+    local tab = prefs.widgets
     table.remove(tab,pos)
-    settings:set(tab)
+    prefs.widgets = tab
     on_alarm()
 end
 
