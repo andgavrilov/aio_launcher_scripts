@@ -12,15 +12,14 @@ local pos = 0
 local color = ui:get_colors()
 
 function on_alarm()
-    ui:show_buttons(get_buttons())
+    --ui:show_buttons(get_buttons())
 	tasker:send_command("flash")
 end
 
 function on_long_click(idx)
 	system:vibrate(10)
-	buttons,colors = get_buttons()
     pos = idx
-	if idx == #buttons then
+	if idx > #prefs.widgets then
 		return
 	end
 	local widgets = get_widgets()
@@ -29,15 +28,14 @@ end
 
 function on_click(idx)
 	system:vibrate(10)
-	buttons,colors = get_buttons()
-	if idx == #buttons then
+	if idx > #prefs.widgets then
 	    aio:do_action("flashlight")
 		tasker:send_command("flash")
 	    return
 	end
 	local widgets = get_widgets()
-	for i=1,#buttons-1 do
-	    local widget = widgets.name[prefs.widgets[i]]
+	for i,v in ipairs(prefs.widgets) do
+	    local widget = widgets.name[v]
 	    if i == idx and not aio:is_widget_added(widget) then
 	        aio:add_widget(widget, get_pos())
 	        aio:fold_widget(widget, false)
@@ -62,7 +60,7 @@ function on_settings()
 end
 
 function get_buttons()
-	buttons,colors = {},{}
+	local buttons,colors = {},{}
 	local widgets = get_widgets()
 	for i,v in ipairs(prefs.widgets) do
 		table.insert(buttons, "fa:" .. widgets.icon[v])
@@ -119,6 +117,7 @@ function get_pos()
 end
 
 function on_command(str)
+	local buttons,colors = get_buttons()
     if (str:sub(1,5) == "flash") and (str:sub(6) == "1") then
         colors[#colors] = color.enabled_icon
     else
