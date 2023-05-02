@@ -18,6 +18,7 @@ local color = ui:get_colors()
 
 function on_alarm()
     ui:show_buttons(get_buttons())
+	--tasker:send_command("flash")
 end
 
 function on_long_click(idx)
@@ -28,7 +29,7 @@ function on_long_click(idx)
 		return
 	end
 	local widgets = get_widgets()
-	ui:show_context_menu({{"angle-left",""},{"ban",""},{"angle-right",""},{widgets.icon[prefs.widgets[idx]],widgets.name[prefs.widgets[idx]]}})
+	ui:show_context_menu({{"angle-left",""},{"ban",""},{"angle-right",""},{widgets.icon[prefs.widgets[idx]],widgets.label[prefs.widgets[idx]]}})
 end
 
 function on_click(idx)
@@ -68,8 +69,8 @@ function get_buttons()
 	buttons,colors = {},{}
 	local widgets = get_widgets()
 	for i,v in ipairs(prefs.widgets) do
-		table.insert(buttons, "fa:" .. widgets.icon[i])
-		table.insert(colors, widgets.enabled[i] and color.enabled_icon or color.disabled_icon)
+		table.insert(buttons, "fa:" .. widgets.icon[v])
+		table.insert(colors, widgets.enabled[v] and color.enabled_icon or color.disabled_icon)
 	end
 	table.insert(buttons, "fa:flashlight")
 	table.insert(colors, color.disabled_icon)
