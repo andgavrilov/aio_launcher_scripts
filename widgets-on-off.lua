@@ -1,7 +1,6 @@
 -- name = "Widget Switcher"
 -- description = "Turns screen widgets on and off when buttons are pressed"
 -- type = "widget"
--- arguments_default = "15 16 26 28 29"
 -- author = "Andrey Gavrilov"
 -- version = "2.0"
 
@@ -9,16 +8,12 @@ prefs = require "prefs"
 prefs._name = "widget-switcher"
 prefs.widgets = (not prefs.widgets) and {} or prefs.widgets
 
-local widgets = {"weather","weatheronly","clock","alarm","worldclock","monitor","traffic","player","apps","appbox","applist","contacts","notify","dialogs","dialer","timer","stopwatch","mail","notes","tasks","feed","telegram","twitter","calendar","calendarw","exchange","finance","bitcoin","control","recorder","calculator","empty","bluetooth","map","remote","health","my-calendar.lua"}
-local icons = {"fa:user-clock","fa:sun-cloud","fa:clock","fa:alarm-clock","fa:business-time","fa:network-wired","fa:exchange","fa:play-circle","fa:robot","fa:th","fa:list","fa:address-card","fa:bell","fa:comment-alt-minus","fa:phone-alt","fa:chess-clock","fa:stopwatch","fa:at","fa:sticky-note","fa:calendar-check","fa:rss-square","fa:paper-plane","fa:dove","fa:calendar-lines","fa:calendar-week","fa:euro-sign","fa:chart-line","fa:coins","fa:wifi","fa:microphone-alt","fa:calculator-alt","fa:eraser","fa:head-side-headphones","fa:map-marked-alt","fa:user-tag","fa:heart","fa:calendar-days"}
-local names = {"Clock & weather","Weather","Clock","Alarm","Worldclock","Monitor","Traffic","Player","Frequent apps","My apps","App list","Contacts","Notify","Dialogs","Dialer","Timer","Stopwatch","Mail","Notes","Tasks","Feed","Telegram","Twitter","Calendar","Weekly calendar","Exchange","Finance","Bitcoin","Control panel","Recorder","Calculator","Empty widget","Bluetooth","Map","User widget","Health","Monthly calendar"}
 local pos = 0
-local buttons,colors = {},{}
 local color = ui:get_colors()
 
 function on_alarm()
     ui:show_buttons(get_buttons())
-	--tasker:send_command("flash")
+	tasker:send_command("flash")
 end
 
 function on_long_click(idx)
@@ -37,6 +32,7 @@ function on_click(idx)
 	buttons,colors = get_buttons()
 	if idx == #buttons then
 	    aio:do_action("flashlight")
+		tasker:send_command("flash")
 	    return
 	end
 	local widgets = get_widgets()
@@ -147,4 +143,3 @@ function get_widgets()
 	end
 	return widgets
 end
-
