@@ -14,7 +14,7 @@ local buttons,colors = {},{}
 
 function on_alarm()
     ui:show_buttons(get_buttons())
-	tasker:send_command("flash=:=" .. aio:self_name():gsub(":","\:"))
+	system:su("settings get secure flashlight_enabled")
 end
 
 function on_long_click(idx)
@@ -31,7 +31,7 @@ function on_click(idx)
 	system:vibrate(10)
 	if idx > #prefs.widgets then
 	    aio:do_action("flashlight")
-		tasker:send_command("flash=:=" .. aio:self_name():gsub(":","\:"))
+		system:su("settings get secure flashlight_enabled")
 	    return
 	end
 	local widgets = get_widgets()
@@ -117,8 +117,8 @@ function get_pos()
 	return 4
 end
 
-function on_command(str)
-    if (str:sub(1,5) == "flash") and (str:sub(6) == "1") then
+function on_shell_result(str)
+    if str == "1" then
         colors[#colors] = color.enabled_icon
     else
         colors[#colors] = color.disabled_icon
