@@ -78,9 +78,8 @@ function move(x)
         return
     end
     local cur = tab[pos]
-    local next = tab[pos+x]
+    tab[pos] = tab[pos+x]
     tab[pos+x] = cur
-    tab[pos] = next
     prefs.widgets = tab
     on_alarm()
 end
